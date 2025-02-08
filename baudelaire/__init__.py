@@ -15,15 +15,28 @@ class Config:
     output_dir: Path
     template_path: Path
     font_path: Path
+    title_font_path: Path
     font_size: int = 50
     max_chars_per_line: int = 30
     max_lines: int = 10
     text_color: str = "black"
     text_position: Tuple[int, int | None] = (100, None)
     multiline_spacing: int = 10
+    title_position: Tuple[int, int] = (100, 20)
+    title_font_size: int = 60
+    title_on_all_boards: bool = False
+    skip_title: bool = False
+
+
+def draw_title(config: Config, draw: ImageDraw.Draw, title: str):
+    title_x, title_y = config.title_position
+    title_font = ImageFont.truetype(str(config.title_font_path), config.title_font_size)
+    draw.textbbox((title_x, title_y), title, font=title_font, spacing=config.multiline_spacing)
+    draw.text((title_x, title_y), title, fill=config.text_color, font=title_font, spacing=config.multiline_spacing)
 
 
 def create_instagram_poem_images(poem: str,
+                                 title: str | None,
                                  config: Config):
     console = Console()
     os.makedirs(config.output_dir, exist_ok=True)
@@ -56,6 +69,14 @@ def create_instagram_poem_images(poem: str,
         draw = ImageDraw.Draw(img)
         font = ImageFont.truetype(str(config.font_path), config.font_size)
         
+        # Handle title
+        if title is not None and not config.skip_title:
+            if not config.title_on_all_boards:
+                if i == 0:
+                    draw_title(config, draw, title)
+            else:
+                draw_title(config, draw, title)
+        
         # Define text position (centrally aligned vertically)
         text_x, maybe_text_y = config.text_position
         _, img_height = img.size
@@ -79,23 +100,31 @@ def create_instagram_poem_images(poem: str,
     return images
 
 
-def extract_code_blocks(markdown_text):
+def extract_code_blocks_and_title(markdown_text):
     """Extracts all code blocks from a Markdown string."""
     code_blocks = []
+    titles = []
 
     class CodeBlockExtractor(mistune.HTMLRenderer):
         def block_code(self, code, info=None):
             code_blocks.append(code)
             return super().block_code(code, info)
+        def heading(self, text, level, **attrs):
+            if level == 1:  # Extract only H1 headings
+                titles.append(text)
+            return super().heading(text, level, **attrs)
 
     parser = mistune.create_markdown(renderer=CodeBlockExtractor())
     parser(markdown_text)  # Parses the markdown text
 
-    return code_blocks
+    title = titles[0] if len(titles) > 0 else ""
+
+    return code_blocks, title
 
 
 def _main(input_: str | Path,
           output_dir: Path,
+          title: str | None = None,
           config_path: Path | None = Path):
 
     if config_path is None:
@@ -118,14 +147,15 @@ def _main(input_: str | Path,
         with open(input_, "r") as f:
             contents = f.read()
         if input_.suffix.lower() == ".md":
-            input_str = "\n\n".join(extract_code_blocks(contents))
+            input_str, title = extract_code_blocks_and_title(contents)
+            input_str = "\n\n".join(input_str)
         else:
             input_str = contents
     else:
         input_str = input_
 
     # Call the image-creation fn:
-    create_instagram_poem_images(input_str, cfg)
+    create_instagram_poem_images(input_str, title, cfg)
 
 
 @click.command()
@@ -140,11 +170,15 @@ def _main(input_: str | Path,
 @click.option('-f', '--input-is-a-file',
               is_flag=True,
               help="If the input is a file path or text of the poem")
-def main(input_poem, output_dir, config_path, input_is_a_file):
+@click.option('-t', '--title',
+              type=str,
+              help="Poem title, can be left blank")
+def main(input_poem, output_dir, config_path, input_is_a_file, title):
     if input_is_a_file:
         input_poem = Path(input_poem)
     _main(input_poem,
           output_dir,
+          title,
           config_path or Path(__file__).parent.parent / "config/default.yaml")
 
 

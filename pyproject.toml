@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "baudelaire"
-version = "0.2.0"
+version = "0.3.0"
 description = "Take a poem and make it an Instagram post"
 authors = ["Chris Czarnecki"]
 license = "MIT"

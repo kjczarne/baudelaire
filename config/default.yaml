@@ -23,3 +23,18 @@ text_position: [100, null]
 
 # Multiline spacing:
 multiline_spacing: 10
+
+# Position of the title box:
+title_position: [100, 10]
+
+# Font to use for the title
+title_font_path: "${this_dir}/../fonts/EB_Garamond/static/EBGaramond-Bold.ttf"
+
+# Title font size:
+title_font_size: 60
+
+# Whether to write the title on all boards or just the first one
+title_on_all_boards: false
+
+# Whether to skip title
+skip_title: false
