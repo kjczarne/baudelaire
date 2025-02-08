@@ -1,0 +1,9 @@
+output_dir: "outputs"
+template_path: "/Users/kjczarnecki/Desktop/poems_template/template.png"
+# font_path: "/System/Library/Fonts/Supplemental/Academy Engraved LET Fonts.ttf"
+font_path: "/System/Library/Fonts/Supplemental/Baskerville.ttc"
+font_size: 40
+max_chars_per_line: 60
+max_lines: 20
+text_color: black
+text_position: [40, 60]
