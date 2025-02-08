@@ -6,9 +6,9 @@ authors = ["Chris Czarnecki"]
 license = "MIT"
 readme = "README.md"
 include = [
-    { path = "templates" },
-    { path = "fonts" },
-    { path = "config" }
+    { path = "templates", format=["sdist", "wheel"] },
+    { path = "fonts", format=["sdist", "wheel"] },
+    { path = "config", format=["sdist", "wheel"] }
 ]
 
 [tool.poetry.dependencies]
