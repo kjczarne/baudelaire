@@ -30,6 +30,8 @@ For example:
 
 ```bash
 baudelaire -o "outputs" "$(cat "poem.txt")"
+# OR:
+baudelaire -o "outputs" -f poem.txt
 ```
 
 > [!note]
@@ -42,6 +44,17 @@ You can give it a try by using Dylan Thomas' _Do not go gentle into that good ni
 ```bash
 baudelaire -o "outputs" "$(cat "tests/rage.txt")"
 ```
+
+### File inputs
+
+#### Plaintext
+
+All plaintext files are read as-is using the basic `f.read()` facility in Python. This means that the entire contents of a `.txt` file will be parsed as a poem.
+
+#### Markdown
+
+> [!warning]
+> Because I personally put my poems in Obsidian and my template involves placing the actual contents of the poem into a markdown codeblock (\`\`\` code fences), this tool will parse all code fences and join them using `\n\n`.
 
 ## Configuration
 

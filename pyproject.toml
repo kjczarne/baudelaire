@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "baudelaire"
-version = "0.1.1"
+version = "0.2.0"
 description = "Take a poem and make it an Instagram post"
 authors = ["Chris Czarnecki"]
 license = "MIT"
@@ -17,6 +17,7 @@ pillow = "^11.1.0"
 rich = "^13.9.4"
 confuk = "^0.6.3"
 click = "^8.1.8"
+mistune = "^3.1.1"
 
 
 [build-system]

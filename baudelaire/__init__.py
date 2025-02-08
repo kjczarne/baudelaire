@@ -1,10 +1,11 @@
 import click
 import confuk
+import mistune
+import textwrap
+import os
 from PIL import Image, ImageDraw, ImageFont
 from pathlib import Path
 from rich.console import Console
-import textwrap
-import os
 from dataclasses import dataclass, field
 from typing import *
 
@@ -78,7 +79,22 @@ def create_instagram_poem_images(poem: str,
     return images
 
 
-def _main(input_: str,
+def extract_code_blocks(markdown_text):
+    """Extracts all code blocks from a Markdown string."""
+    code_blocks = []
+
+    class CodeBlockExtractor(mistune.HTMLRenderer):
+        def block_code(self, code, info=None):
+            code_blocks.append(code)
+            return super().block_code(code, info)
+
+    parser = mistune.create_markdown(renderer=CodeBlockExtractor())
+    parser(markdown_text)  # Parses the markdown text
+
+    return code_blocks
+
+
+def _main(input_: str | Path,
           output_dir: Path,
           config_path: Path | None = Path):
 
@@ -95,7 +111,21 @@ def _main(input_: str,
         output_dir,
         **config
     )
-    create_instagram_poem_images(input_, cfg)
+
+    # Handle Markdown files, where codeblocks are assumed to
+    # contain the poems:
+    if isinstance(input_, Path):
+        with open(input_, "r") as f:
+            contents = f.read()
+        if input_.suffix.lower() == ".md":
+            input_str = "\n\n".join(extract_code_blocks(contents))
+        else:
+            input_str = contents
+    else:
+        input_str = input_
+
+    # Call the image-creation fn:
+    create_instagram_poem_images(input_str, cfg)
 
 
 @click.command()
@@ -107,8 +137,15 @@ def _main(input_: str,
 @click.option('-c', '--config-path',
               type=click.Path(exists=True, path_type=Path),
               help="Path to the config file")
-def main(input_poem, output_dir, config_path):
-    _main(input_poem, output_dir, config_path or Path(__file__).parent.parent / "config/default.yaml")
+@click.option('-f', '--input-is-a-file',
+              is_flag=True,
+              help="If the input is a file path or text of the poem")
+def main(input_poem, output_dir, config_path, input_is_a_file):
+    if input_is_a_file:
+        input_poem = Path(input_poem)
+    _main(input_poem,
+          output_dir,
+          config_path or Path(__file__).parent.parent / "config/default.yaml")
 
 
 if __name__ == "__main__":
