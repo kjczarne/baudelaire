@@ -1,9 +1,7 @@
 # Where to load the template image from:
-# template_path: "/Users/kjczarnecki/Desktop/poems_template/template.png"
 template_path: "templates/default.png"
 
 # Where to load the font file from:
-# font_path: "/System/Library/Fonts/Supplemental/Baskerville.ttc"
 font_path: "fonts/EB_Garamond/EBGaramond-VariableFont_wght.ttf"
 
 # Font size:
@@ -21,7 +19,7 @@ text_color: black
 # Text position. If you set `y` to `null`, the width
 # in the Y axis will be inferred and the top and bottom
 # margins will be equal:
-text_position: [40, null]
+text_position: [100, null]
 
 # Multiline spacing:
 multiline_spacing: 10
