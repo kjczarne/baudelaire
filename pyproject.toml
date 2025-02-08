@@ -5,6 +5,11 @@ description = "Take a poem and make it an Instagram post"
 authors = ["Chris Czarnecki"]
 license = "MIT"
 readme = "README.md"
+include = [
+    { path = "templates" },
+    { path = "fonts" },
+    { path = "config" }
+]
 
 [tool.poetry.dependencies]
 python = "^3.10"
@@ -20,10 +25,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 baudelaire = "baudelaire:main"
-
-[tool.poetry.package]
-include = [
-    { path = "templates", format = "dir" },
-    { path = "fonts", format = "dir" },
-    { path = "config", format = "dir" }
-]
