@@ -1,8 +1,8 @@
 # Where to load the template image from:
-template_path: "templates/default.png"
+template_path: "${this_dir}/../templates/default.png"
 
 # Where to load the font file from:
-font_path: "fonts/EB_Garamond/EBGaramond-VariableFont_wght.ttf"
+font_path: "${this_dir}/../fonts/EB_Garamond/EBGaramond-VariableFont_wght.ttf"
 
 # Font size:
 font_size: 40

@@ -80,7 +80,15 @@ def create_instagram_poem_images(poem: str,
 
 def _main(input_: str,
           output_dir: Path,
-          config_path: Path = Path(__file__).parent.parent / "config/default.yaml"):
+          config_path: Path | None = Path):
+
+    if config_path is None:
+        try:
+            # If running in editable mode:
+            config_path = Path(__file__).parent.parent / "config/default.yaml"
+        except FileNotFoundError:
+            # If running from a built package
+            config_path = Path(__file__).parent / "config/default.yaml"
 
     config = confuk.parse_config(config_path, "omegaconf")
     cfg = Config(
