@@ -1,9 +1,27 @@
-output_dir: "outputs"
-template_path: "/Users/kjczarnecki/Desktop/poems_template/template.png"
-# font_path: "/System/Library/Fonts/Supplemental/Academy Engraved LET Fonts.ttf"
-font_path: "/System/Library/Fonts/Supplemental/Baskerville.ttc"
+# Where to load the template image from:
+# template_path: "/Users/kjczarnecki/Desktop/poems_template/template.png"
+template_path: "templates/default.png"
+
+# Where to load the font file from:
+# font_path: "/System/Library/Fonts/Supplemental/Baskerville.ttc"
+font_path: "fonts/EB_Garamond/EBGaramond-VariableFont_wght.ttf"
+
+# Font size:
 font_size: 40
+
+# How many maximum characters per line before wrapping happens:
 max_chars_per_line: 60
+
+# How many maximum lines are permitted per image:
 max_lines: 20
+
+# Text color:
 text_color: black
-text_position: [40, 60]
+
+# Text position. If you set `y` to `null`, the width
+# in the Y axis will be inferred and the top and bottom
+# margins will be equal:
+text_position: [40, null]
+
+# Multiline spacing:
+multiline_spacing: 10

@@ -11,8 +11,19 @@ python = "^3.10"
 pillow = "^11.1.0"
 rich = "^13.9.4"
 confuk = "^0.6.3"
+click = "^8.1.8"
 
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+baudelaire = "baudelaire:main"
+
+[tool.poetry.package]
+include = [
+    { path = "templates", format = "dir" },
+    { path = "fonts", format = "dir" },
+    { path = "config", format = "dir" }
+]
