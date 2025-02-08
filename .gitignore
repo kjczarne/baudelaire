@@ -3,3 +3,6 @@ __pycache__
 *egg-info
 .DS_Store
 dist
+
+# My own config with a custom template
+config/chris-czarnecki.yaml

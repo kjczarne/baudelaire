@@ -2,7 +2,17 @@
   <img src="static/logo.png" alt="logo" width="200" style="display: block;margin-left: auto;margin-right: auto;"/>
 </p>
 </br>
-Create Instagram posts from your plaintext poetry in seconds.
+
+<p align="center">
+Create Instagram posts from your plaintext poetry in seconds:
+</p>
+
+</br>
+<p align="center">
+<img src="static/poem_part_1.png" alt="logo" width="300" style="display: block;margin-left: auto;margin-right: auto;"/>
+</p>
+
+</br>
 
 ## Installation
 
