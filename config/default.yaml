@@ -38,3 +38,6 @@ title_on_all_boards: false
 
 # Whether to skip title
 skip_title: false
+
+# Whether to break out each stanza into a separate board:
+break_stanzas: true

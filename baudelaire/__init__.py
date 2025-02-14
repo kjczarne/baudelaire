@@ -26,6 +26,7 @@ class Config:
     title_font_size: int = 60
     title_on_all_boards: bool = False
     skip_title: bool = False
+    break_stanzas: bool = False
 
 
 def draw_title(config: Config, draw: ImageDraw.Draw, title: str):
@@ -53,7 +54,7 @@ def create_instagram_poem_images(poem: str,
     chunks = []
     chunk = []
     for line in lines:
-        if line == "<break>" or len(chunk) >= config.max_lines:
+        if line == "<break>" or len(chunk) >= config.max_lines or (config.break_stanzas and line == ""):
             if chunk:
                 chunks.append("\n".join(chunk))
                 chunk = []
